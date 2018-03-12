@@ -11,8 +11,12 @@ router.use('/wiki', wikiRouter);
 router.use('/user', userRouter);
 
 router.get('/', (req, res, next)=>{
-    res.render('index', {
-        pages: Page.findAll()
+    Page.findAll()
+    .then(function(foundPages){
+        console.log(foundPages);
+        res.render('index', {
+        pages: foundPages
+        });
     });
 });
 
