@@ -28,7 +28,7 @@ app.use(express.static('public'));
 app.use('/', makesRouter)
 
 // start the server
-models.db.sync({force: true})
+models.db.sync()
 .then(function () {
     console.log('All tables created!');
     app.listen(3000, function () {
