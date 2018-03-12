@@ -5,6 +5,7 @@ var morgan = require('morgan');
 var nunjucks = require('nunjucks');
 var makesRouter = require('./routes');
 var fs = require('fs');
+var models = require('./models');
 // var path = require('path');
 // var mime = require('mime');
 var bodyParser = require('body-parser');
@@ -27,6 +28,11 @@ app.use(express.static('public'));
 app.use('/', makesRouter)
 
 // start the server
-var server = app.listen(1337, function(){
-  console.log('listening on port 1337');
-});
+models.db.sync({force: true})
+.then(function () {
+    console.log('All tables created!');
+    app.listen(3000, function () {
+        console.log('Server is listening on port 3000!');
+    });
+})
+.catch(console.error.bind(console));
